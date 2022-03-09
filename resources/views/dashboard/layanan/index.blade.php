@@ -43,7 +43,7 @@
                                 <div class="row">
                                     <h4 class="card-title text-white" style="text-align: center" >{{ $layanan->nama_singkat }}</h4>
                                     <p class="card-text" style="text-align: center">Antrian Hari Ini</p>
-                                    <?php $data = App\Models\Pendaftaran::select()->where('layanan_id', $layanan->id)->where('tanggal_layanan', date(now()->format('Y-m-d')))->where('keterangan_tambahan_status', "Butuh Konfirmasi")->get() ?>
+                                    <?php $data = App\Models\Pendaftaran::select()->where('layanan_id', $layanan->id)->where('tanggal_layanan', date(now()->format('Y-m-d')))->where('keterangan_tambahan_status', "O")->get() ?>
                                     @if ($data)
                                     <h1 class="text-white" style="text-align: center">{{ $data->count() }}</h1>
                                     @else

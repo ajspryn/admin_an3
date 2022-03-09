@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         // Provider Lain
         AzisHapidin\IndoRegion\IndoRegionServiceProvider::class,
+        Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class,
 
         /*
          * Package Service Providers...

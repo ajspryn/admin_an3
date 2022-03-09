@@ -8,6 +8,7 @@ use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\KetersediaanController;
 use App\Http\Controllers\Pengguna_layananController;
 use App\Http\Controllers\Penyedia_layananController;
+use App\Http\Controllers\Verifikasi_pendaftarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,5 +44,7 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('/ketersediaan', Keter
 Route::middleware(['auth:sanctum', 'verified'])->resource('/layanan', LayananController::class);
 
 Route::middleware(['auth:sanctum', 'verified'])->resource('/pendaftaran', PendaftaranController::class);
+
+Route::middleware(['auth:sanctum', 'verified'])->resource('/verifikasi_pendaftar', Verifikasi_pendaftarController::class);
 
 Route::post('getkabupaten', [IndoregionController::class, 'kabupaten'])->name('getkabupaten');

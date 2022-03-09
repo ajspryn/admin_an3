@@ -60,7 +60,7 @@ class PendaftaranController extends Controller
             'penyedia_layanan_id'=> 'required',
             'layanan_id'=> 'required',
             'tanggal_layanan'=> 'required',
-            'pengguna_id'=> 'nullable',
+            'pengguna_id'=> 'required',
             'nama_pengguna'=> 'required',
             'nomor_identitas'=> 'required',
             'keterangan_pendaftaran'=> 'nullable',
@@ -69,7 +69,7 @@ class PendaftaranController extends Controller
             'no_telp'=> 'required',
         ]);
 
-        $ketersediaan=Ketersediaan::select('jumlah_tersedia')->where('layanan_id', $request->layanan_id)->where('tanggal_layanan', $request->tanggal_layanan)->get()->first();
+        $ketersediaan=Ketersediaan::select()->where('layanan_id', $request->layanan_id)->where('tanggal_layanan', $request->tanggal_layanan)->get()->first();
         $cek=Ketersediaan::select()->where('layanan_id', $request->layanan_id)->where('tanggal_layanan', $request->tanggal_layanan)->get()->count();
         $hk=Ketersediaan::select('tanggal_layanan')->where('layanan_id', $request->layanan_id)->where('tanggal_layanan', $request->tanggal_layanan)->get()->first();
         // return ($ketersediaan);
@@ -84,7 +84,7 @@ class PendaftaranController extends Controller
                 'nomor_identitas'=>$request->nomor_identitas,
                 'keterangan_pendaftaran'=>$request->keterangan_pendaftaran,
                 'status_transaksi'=>$request->status_transaksi,
-                'keterangan_tambahan_status'=>$request->keterangan_tambahan_status,
+                'keterangan_tambahan_status'=>$ketersediaan->verifikasi,
                 'no_telp'=>$request->no_telp,
                 'no_antrian'=>$no_antrian,
             ]);
@@ -138,7 +138,6 @@ class PendaftaranController extends Controller
         // return $request;
         Pendaftaran::where('id', $pendaftaran->id)
         ->update([
-                'status_transaksi'=>$request->status_transaksi,
                 'keterangan_tambahan_status'=>$request->keterangan_tambahan_status,
                 // 'penyedia_layanan_id'=>$pendaftaran->penyedia_layanan_id,
                 // 'layanan_id'=>$pendaftaran->layanan_id,

@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="/">
-                        <x-jet-application-mark class="block h-9 w-auto" />
+                        <i class="me-50" data-feather="user"></i>
                     </a>
                 </div>
 

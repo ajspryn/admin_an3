@@ -27,8 +27,31 @@
                 </li>
                 <li class="{{ Request::is('pengguna_layanan*')? "active":"" }} "><a class="d-flex align-items-center" href="/pengguna_layanan"><i data-feather="users"></i><span class="menu-item text-truncate" data-i18n="List">Pengguna Layanan</span></a>
                 </li>
-                <li class="{{ Request::is('pendaftaran*')? "active":"" }} "><a class="d-flex align-items-center" href="/pendaftaran"><i data-feather="file-text"></i><span class="menu-item text-truncate" data-i18n="List">Pendaftaran</span></a>
-                </li>
+                {{-- <li class="{{ Request::is('pendaftaran*')? "active":"" }} "><a class="d-flex align-items-center" href="/pendaftaran"><i data-feather="file-text"></i><span class="menu-item text-truncate" data-i18n="List">Pendaftaran</span></a>
+                </li> --}}
+                <?php
+                $layanan_id = App\Models\Layanan::select()->where('user_id', Auth::user()->id)->get()->first();
+                $data = App\Models\Pendaftaran::select()->where('layanan_id', $layanan_id->id)->where('keterangan_tambahan_status', "K")->get() ?>
+                <li><a class="d-flex align-items-center" href="/" ><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Pendaftaran</span></span>
+                    @if ($data->count())
+                        <span class="badge badge-light-warning rounded-pill ms-auto me-1">{{ $data->count() }}</span>
+                    @else
+
+                    @endif
+                </a>
+                <ul class="menu-content">
+                        <li class="{{ Request::is('pendaftaran*')? "active":"nav-item" }} "><a class="d-flex align-items-center" href="/pendaftaran"><i data-feather="circle"></i><span class="menu-item text-truncate" >Daftar</span></a>
+                        </li>
+                        <li class="{{ Request::is('verifikasi_pendaftar*')? "active":"nav-item" }} "><a class="d-flex align-items-center" href="/verifikasi_pendaftar"><i data-feather="circle"></i><span class="menu-item text-truncate" >Konfirmasi pendaftaran</span>
+                            @if ($data->count())
+                                <span class="badge badge-light-warning rounded-pill ms-auto me-1">{{ $data->count() }}</span>
+                            @else
+
+                            @endif
+                        </a>
+                        </li>
+                    </ul>
+            </li>
             </li>
         </ul>
     </div>

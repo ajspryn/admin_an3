@@ -76,8 +76,8 @@ class LayananController extends Controller
             'penyedia'=>Penyedia_layanan::select()->where('user_id', $user)->get()->first(),
             'penyedia_layanans'=>Penyedia_layanan::select()->where('user_id' , $user)->get(),
             'layanan'=>Layanan::select()->where('id' , $layanan->id)->get()->first(),
-            'pendaftar'=>Pendaftaran::select()->where('layanan_id', $layanan->id)->where('tanggal_layanan', $now)->where('keterangan_tambahan_status', "Butuh Konfirmasi")->get(),
-            'antrian'=>Pendaftaran::select()->where('layanan_id', $layanan->id)->where('tanggal_layanan', $now)->where('keterangan_tambahan_status', "Butuh Konfirmasi")->orderBy('no_antrian', 'asc')->get()->first(),
+            'pendaftar'=>Pendaftaran::select()->where('layanan_id', $layanan->id)->where('tanggal_layanan', $now)->where('keterangan_tambahan_status', "O")->get(),
+            'antrian'=>Pendaftaran::select()->where('layanan_id', $layanan->id)->where('tanggal_layanan', $now)->where('keterangan_tambahan_status', "O")->orderBy('no_antrian', 'asc')->get()->first(),
         ]);
     }
 

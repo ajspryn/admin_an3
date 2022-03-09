@@ -6,8 +6,10 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "asantibanez/livewire-charts": "^2.4",
         "azishapidin/indoregion": "^3.0",
         "fruitcake/laravel-cors": "^2.0",
+        "fx3costa/laravelchartjs": "^2.9",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.75",
         "laravel/jetstream": "^2.6",

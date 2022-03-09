@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Layanan;
+use App\Models\Pengguna_layanan;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pendaftaran extends Model
 {
@@ -15,4 +17,10 @@ class Pendaftaran extends Model
     public function pengguna(){
         return $this->belongsTo(Pengguna_layanan::class);
     }
+
+    public function layanan(){
+        return $this->belongsTo(Layanan::class);
+    }
+
+
 }

@@ -10,12 +10,12 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                 <div class="row breadcrumbs-top">
                     <div class="col-12">
-                        <h2 class="content-header-title float-start mb-0">Data Pengguna Layanan</h2>
+                        <h2 class="content-header-title float-start mb-0">Konfirmasi pendaftar layanan</h2>
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item">Menu Utama
+                                <li class="breadcrumb-item">Pendaftaran
                                 </li>
-                                <li class="breadcrumb-item"><a href="/ketersediaan">Pengguna Layanan</a>
+                                <li class="breadcrumb-item"><a href="/verifikasi_pendaftar">Konfirmasi pendaftar</a>
                                 </li>
                             </ol>
                         </div>
@@ -41,27 +41,39 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nomor Identitas</th>
                                     <th>Nama Pengguna</th>
-                                    <th>Alamat</th>
+                                    <th>Mendaftar di layanan</th>
+                                    <th>Tanggal mendaftar</th>
+                                    <th>No antrian</th>
                                     <th>Email</th>
                                     <th>No Telepon</th>
-                                    <th>Ubah Data</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($pengguna_layanans as $pengguna )
+                                @foreach ($pendaftars as $pendaftar )
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $pengguna->nomor_identitas }}</td>
-                                    <td>{{ $pengguna->nama_pengguna }}</td>
-                                    <td>{{ $pengguna->alamat_1 }}, {{ $pengguna->alamat_2 }}, {{ $pengguna->alamat_3 }}, {{ $pengguna->alamat_4 }} {{ $pengguna->alamat_kodepos }}</td>
-                                    <td>{{ $pengguna->alamat_email }}</td>
-                                    <td>{{ $pengguna->no_telp }}</td>
+                                    <td>{{ $pendaftar->nama_pengguna }}</td>
+                                    <td>{{ $pendaftar->layanan->nama_singkat }}</td>
+                                    <td>{{ $pendaftar->tanggal_layanan }}</td>
+                                    <td>{{ $pendaftar->no_antrian }}</td>
+                                    <td>{{ $pendaftar->pengguna->alamat_email }}</td>
+                                    <td>{{ $pendaftar->pengguna->no_telp }}</td>
                                     <td>
-                                        <a href="/pengguna_layanan/{{ $pengguna->id }}" type="button" class="btn btn-icon btn-flat-success">
-                                            <span>Ubah</span>
-                                        </a>
+                                        <form method="POST" action="/verifikasi_pendaftar/{{ $pendaftar->id }}">
+                                            @method("put")
+                                            @csrf
+                                            <input
+                                            type="hidden"
+                                            name="keterangan_tambahan_status"
+                                            class="form-control"
+                                            value="O"
+                                            />
+                                            <button type="submit" class="btn btn-icon btn-success">
+                                                <i data-feather="check-circle"></i><span> Verifikasi</span>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach

@@ -19,6 +19,8 @@
     <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
     <!-- BEGIN Vendor JS-->
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- BEGIN: Page Vendor JS-->
     <script src="../../../app-assets/vendors/js/forms/spinner/jquery.bootstrap-touchspin.js"></script>
     <script src="../../../app-assets/vendors/js/charts/apexcharts.min.js"></script>
@@ -107,6 +109,7 @@
          });
     });
   </script>
+
 </body>
 <!-- END: Body-->
 
