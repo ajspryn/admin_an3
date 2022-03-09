@@ -28,7 +28,7 @@ class KetersediaanController extends Controller
             'layanans'=>Layanan::select()->where('user_id' , $user)->get(),
             'nama_layanan'=>Layanan::select()->where('id' , request('layanan_id'))->get()->first(),
             'reqlayanan'=>request('layanan_id'),
-            'ketersediaan'=>Ketersediaan::select()->where('layanan_id', request('layanan_id'))->get(),
+            'ketersediaans'=>Ketersediaan::select()->where('layanan_id', request('layanan_id'))->get(),
             $start = new Carbon($awal),
             $end = new Carbon($akhir),
             'range' => CarbonPeriod::create($start->format("Y-m-d"), $end->format("Y-m-d")),
@@ -54,13 +54,14 @@ class KetersediaanController extends Controller
      */
     public function store(Request $request)
     {
-        $layanan_id=$request->data;
-        // dd($layanan_id);
+        // $layanan_id=$request->data;
+        // dd($request);
         $request -> validate([
             'data.*.penyedia_layanan_id'=> 'required',
             'data.*.layanan_id'=> 'required',
             'data.*.tanggal_layanan'=> 'required',
             'data.*.jumlah_tersedia'=> 'required',
+            'data.*.verifikasi'=> 'required',
         ]);
 
         foreach ($request->data as $key => $value) {
@@ -69,20 +70,19 @@ class KetersediaanController extends Controller
             $id=$value['layanan_id'];
             // dd($cek->count);
             if($cek == 0){
-                Ketersediaan::create($value);
-                return redirect('/ketersediaan')->with('success', 'Data ketersediaan berhasil di input');
+                $input=Ketersediaan::create($value);
             }
             else if($cek == 1){
-                Ketersediaan::where('tanggal_layanan', $tgl)
+                $update=Ketersediaan::where('tanggal_layanan', $tgl)
                 ->where('layanan_id', $id)
                 ->update($value);
-                return redirect('/ketersediaan')->with('success', 'Data ketersediaan berhasil di ubah');
+                // return redirect('/ketersediaan')->with('success', 'Data ketersediaan berhasil di ubah');
             }
             else{
                 return redirect('/ketersediaan')->with('danger', 'Data ketersediaan gagal di input');
             }
         }
-
+        return redirect('/ketersediaan')->with('success', 'Data ketersediaan berhasil di input');
     }
 
     /**

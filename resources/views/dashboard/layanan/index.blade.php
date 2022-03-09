@@ -155,7 +155,7 @@
 </div>
 <!--/ tambah layanan -->
 
-<!-- edit layanan -->
+{{-- <!-- edit layanan -->
 <div class="modal fade" id="editdata" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
         <div class="modal-content">
@@ -227,5 +227,5 @@
         </div>
     </div>
 </div>
-<!--/ edit layanan -->
+<!--/ edit layanan --> --}}
 @endsection

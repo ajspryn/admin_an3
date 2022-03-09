@@ -19,6 +19,7 @@ class CreateKetersediaansTable extends Migration
             $table->string('penyedia_layanan_id');
             $table->date('tanggal_layanan');
             $table->string('jumlah_tersedia');
+            $table->string('verifikasi');
             $table->timestamps();
         });
     }

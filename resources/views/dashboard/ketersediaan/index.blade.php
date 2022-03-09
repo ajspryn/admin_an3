@@ -68,73 +68,6 @@
 
                 @if (request('layanan_id')!="")
 
-<!-- Basic multiple Column Form section start -->
-{{-- <section id="multiple-column-form">
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          <h4 class="card-title">Multiple Column</h4>
-        </div>
-        <div class="card-body">
-            <form class="form" method="POST" action="/ketersediaan">
-                @csrf
-                <div class="row">
-                @foreach ($range as $rdate)
-              <div class="col-md-4 col-12">
-                <div class="mb-1">
-                  <label class="form-label" for="first-name-column">Layanan</label>
-                  <input
-                    type="text"
-                    id="first-name-column"
-                    class="form-control"
-                    name="layanan"
-                    @foreach ($nama_layanan as $nama)
-                    value="{{ $nama->nama_singkat }}"
-                    @endforeach
-                    disabled
-                  />
-                </div>
-              </div>
-              <div class="col-md-4 col-12">
-                <div class="mb-1">
-                  <label class="form-label" for="last-name-column">Tanggal</label>
-                  <input
-                    type="text"
-                    id="last-name-column"
-                    class="form-control"
-                    name="tanggal{{ $rdate->format("Y-m-d") }}"
-                    value="{{ $rdate->format("Y-m-d") }}"
-                    disabled
-                  />
-                </div>
-              </div>
-              <div class="col-md-2 col-12">
-                <div class="mb-1">
-                  <label class="form-label" for="city-column">Ketersediaan</label>
-                  <input type="number" id="city-column" class="form-control" name="ketersediaan{{ $rdate->format("Y-m-d")}}" value="0" />
-                </div>
-              </div>
-              <div class="col-md-2 col-12">
-                <div class="mb-1">
-                  <label class="form-label" for="city-column">Terpakai</label>
-                  <input type="text" id="city-column" class="form-control" disabled />
-                </div>
-              </div>
-              @endforeach
-              <div class="d-flex justify-content-between">
-                  <button type="reset" class="btn btn-outline-secondary">Reset</button>
-                  <button type="submit" class="btn btn-primary me-1">Submit</button>
-              </div>
-            </div>
-        </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> --}}
-<!-- Basic Floating Label Form section end -->
-
                 <!-- Project table -->
                 <form method="POST" action="/ketersediaan">
                     @csrf
@@ -147,11 +80,10 @@
                                     <th>Layanan</th>
                                     <th>Tanggal</th>
                                     <th>Ketersediaan</th>
+                                    <th>Verifikasi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @for ($i=0;$i<$jumlah;$i++)
-                                @endfor --}}
                                 @foreach ($range as $rdate)
                                 <tr>
                                     <td>{{ $nama_layanan->nama_singkat }}
@@ -161,12 +93,30 @@
                                     <td>{{ $rdate->format("Y-m-d") }}
                                         <input type="hidden" value="{{ $rdate->format("Y-m-d") }}" name="data[{{ $loop->iteration }}][tanggal_layanan]" />
                                     </td>
-                                    <?php $data = App\Models\Ketersediaan::select('jumlah_tersedia')->where('tanggal_layanan', $rdate)->where('layanan_id', $nama_layanan->id)->get()->first()?>
+                                    <?php $data = App\Models\Ketersediaan::select()->where('tanggal_layanan', $rdate)->where('layanan_id', $nama_layanan->id)->get()->first()?>
                                     <td><input type="number"@if ($data)
                                                                 value="{{ $data->jumlah_tersedia }}"
                                                             @else
                                                                 value="0"
-                                                            @endif name="data[{{ $loop->iteration }}][jumlah_tersedia]"/></td>
+                                                            @endif name="data[{{ $loop->iteration }}][jumlah_tersedia]"/>
+                                    </td>
+                                    <td>
+                                        <select class="form-select" name="data[{{ $loop->iteration }}][verifikasi]" >
+                                            @if ($data)
+                                                @if (old('data[{{ $loop->iteration }}][verifikasi]' , $data->verifikasi) == 'K')
+                                                <option value="O">Otomatis</option>
+                                                <option value="K" selected>Butuh konfirmasi</option>
+                                                @else
+                                                <option value="O">Otomatis</option>
+                                                <option value="K">Butuh konfirmasi</option>
+                                                @endif
+                                            @else
+                                                <option value="O">Otomatis</option>
+                                                <option value="K">Butuh konfirmasi</option>
+                                            @endif
+
+                                        </select>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -193,102 +143,5 @@
 <!--/ Style variation -->
 </div>
 <!-- END: Content-->
-<!-- Edit User Modal -->
-<div class="modal fade" id="tambahdata" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-edit-user">
-        <div class="modal-content">
-            <div class="modal-header bg-transparent">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body pb-5 px-sm-5 pt-50">
-                <div class="text-center mb-2">
-                    <h1 class="mb-1">Edit User Information</h1>
-                    <p>Updating user details will receive a privacy audit.</p>
-                </div>
-                <form id="editUserForm" class="row gy-1 pt-75" method="POST" action="ketersediaan">
-                    @csrf
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="layanan_id">Layanan ID</label>
-                        <select class="form-select" id="layanan_id" name="layanan_id">
-                            <option>Pilih Layanan</option>
-                            @foreach ($layanans as $layanan)
-                            <option value="{{ $layanan->id }}">{{ $layanan->nama_singkat }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="tanggal_layanan">Tanggal_Layanan</label>
-                        <input
-                        type="date"
-                        id="tanggal_layanan"
-                        name="tanggal_layanan"
-                        class="form-control flatpickr-basic"
-                        />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="jumlah_tersedia">Jumlah Tersedia</label>
-                        <input
-                        type="number"
-                        id="jumlah_tersedia"
-                        name="jumlah_tersedia"
-                        class="form-control"
-                        />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="jumlah_terambil">Jumlah Terambil</label>
-                        <input
-                        type="number"
-                        id="jumlah_terambil"
-                        name="jumlah_terambil"
-                        class="form-control"
-                        />
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label" for="jumlah_pembatalan">Jumlah Pembatalan</label>
-                        <input
-                        type="number"
-                        id="jumlah_pembatalan"
-                        name="jumlah_pembatalan"
-                        class="form-control"
-                        />
-                    </div>
-                    <div class="col-12 col-md-12">
-                        <label class="form-label" for="keterangan_ketersediaan">Keterangan Ketersediaan</label>
-                        <input
-                        type="text"
-                        id="keterangan_ketersediaan"
-                        name="keterangan_ketersediaan"
-                        class="form-control"
-                        />
-                    </div>
-                    <div class="col-12 col-md-12">
-                        <label class="form-label" for="nomor_urut">Nomor Urut</label>
-                        <input
-                        type="number"
-                        id="nomor_urut"
-                        name="nomor_urut"
-                        class="form-control"
-                        />
-                    </div>
-
-                    <input
-                    type="hidden"
-                    name="user_id"
-                    class="form-control"
-                    value="{{ Auth::user()->id }}"
-                    />
-
-                    <div class="col-12 text-center mt-2 pt-50">
-                        <button type="submit" class="btn btn-primary me-1">Submit</button>
-                        <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
-                            Discard
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!--/ Edit User Modal -->
 
 @endsection
