@@ -15,4 +15,8 @@ class Pengguna_layanan extends Model
     public function pendaftaran(){
         return $this->hasMany(Pendaftaran::class);
     }
+
+    public function umpan_balik(){
+        return $this->hasMany(Umpan_balik::class);
+    }
 }

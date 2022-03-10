@@ -153,7 +153,7 @@
             </div>
             <h2 class="mb-25">{{ $total_layanan_taunan }}</h2>
             <div class="d-flex justify-content-center">
-              <span>Total pengguna layanan anda tahun ini</span>
+              <span>Total pengguna seluruh layanan anda di tahun ini</span>
             </div>
             <div id="budget-chart"></div>
             <a type="button" class="btn btn-primary" href="layanan">Lihat semua layanan</a>
@@ -163,6 +163,78 @@
     </div>
     <!--/ Revenue Report Card -->
   </div>
+
+    <div class="row match-height">
+    <!-- Company Table Card -->
+    <div class="col-lg-8 col-12">
+      <section class="basic-datatable">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <table class="datatables-basic table">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama pengguna</th>
+                                    <th>Menggunakan layanan</th>
+                                    <th>Tanggal layanan</th>
+                                    <th>No antrian</th>
+                                    <th>Rating</th>
+                                    <th>Review</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($reviews as $review )
+                                <tr>
+                                    <?php
+                                    $pendaftar = App\Models\Pendaftaran::select()->where('layanan_id', $review->layanan->id)->get()->first()
+                                    ?>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $review->pengguna->nama_pengguna }}</td>
+                                    <td>{{ $review->layanan->nama_singkat }}</td>
+                                    <td>{{ $pendaftar->tanggal_layanan }}</td>
+                                    <td>{{ $pendaftar->no_antrian }}</td>
+                                    <td>{{ $review->rating }}</td>
+                                    <td>{{ $review->masukan }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            </section>
+    </div>
+    <!--/ Company Table Card -->
+
+    <!-- Developer Meetup Card -->
+    <div class="col-lg-4 col-md-6 col-12">
+      <div class="card card-browser-states">
+        <div class="card-header">
+          <div>
+            <h4 class="card-title">Rata-rata rating</h4>
+            <p class="card-text font-small-2">Setiap layanan</p>
+          </div>
+        </div>
+        <div class="card-body">
+        @foreach ($layanans as $layananss)
+        <?php
+        $rating_setiap_layanan = App\Models\Umpan_balik::select()->where('layanan_id', $layananss->id)->get()->avg('rating')
+        ?>
+            <div class="browser-states">
+                <div class="d-flex">
+                    <h6 class="align-self-center mb-0"> {{ $layananss->nama_singkat }}</h6>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="fw-bold text-body-heading me-1"><i data-feather="star" class="font-medium-5"></i> {{ $rating_setiap_layanan }}</div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+<!--/ Developer Meetup Card -->
+
 
             </section>
             <!-- Dashboard Analytics end -->

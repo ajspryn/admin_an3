@@ -10,6 +10,7 @@ use App\Models\Umpan_balik;
 use Illuminate\Http\Request;
 use App\Models\Penyedia_layanan;
 use Cron\MonthField;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -78,6 +79,7 @@ class DashboardController extends Controller
                 'layanans'=>Layanan::select()->where('penyedia_layanan_id', $penyedia_id->id)->get(),
                 'penyedia'=>Penyedia_layanan::select()->where('user_id', $user_id)->get()->first(),
                 'rating'=>Umpan_balik::select()->where('penyedia_layanan_id', $penyedia_id->id)->get()->avg('rating'),
+                'reviews'=>Umpan_balik::select()->where('penyedia_layanan_id', $penyedia_id->id)->orderBy('id', 'desc')->limit(50)->get(),
                 'pendaftar_butuh_verifikasi'=>Pendaftaran::select()->where('penyedia_layanan_id', $penyedia_id->id)->where('keterangan_tambahan_status', "K")->get()->count(),
             ],compact('layanan_perbulan'));
         }

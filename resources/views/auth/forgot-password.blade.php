@@ -98,7 +98,7 @@
                             <div class="d-flex col-lg-4 align-items-center auth-bg px-2 p-lg-5">
                                 <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
                                     <h2 class="card-title fw-bold mb-1">Lupa Password? 🔒</h2>
-                                    <p class="card-text mb-2">Silahkan Masukan Password Anda Untuk Mengganti Password</p>
+                                    <p class="card-text mb-2">Silahkan masukan email anda untuk atur ulang password</p>
                                     @if (session('status'))
                                     <div class="mb-4 font-medium text-sm text-green-600">
                                         {{ session('status') }}
@@ -107,6 +107,7 @@
 
                                     <x-jet-validation-errors class="mb-4" />
                                     <form class="auth-forgot-password-form mt-2" method="POST" action="{{ route('password.email') }}">
+                                        @csrf
                                         <div class="mb-1">
                                             <label class="form-label" for="forgot-password-email">{{ __('Email') }}</label>
                                             <input class="form-control" id="forgot-password-email" type="text" name="email" :value="old('email')" required autofocus aria-describedby="forgot-password-email" tabindex="1" />

@@ -67,8 +67,7 @@
             <ul class="nav navbar-nav align-items-center ms-auto">
                 <li class="nav-item d-none d-lg-block"><a class="nav-link nav-link-style"><i class="ficon" data-feather="moon"></i></a></li>
                 <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <?php $penyedia = App\Models\Penyedia_layanan::select()->where('user_id', Auth::user()->name)->get()->first() ?>
-                    @if($penyedia)
+                    @if(Auth::user()->email_verified_at)
                     <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder">{{ Auth::user()->name }}</span><span class="user-status">{{ $penyedia->nama_penyedia }}</span></div><span class="avatar"><img class="round" src="{{ Auth::user()->profile_photo_url }}" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span></a>
                     @else
                     <div class="user-nav d-sm-flex d-none"><span class="user-name fw-bolder">{{ Auth::user()->name }}</span><span class="user-status">Anda belum verifikasi email</span></div><span class="avatar"><img class="round" src="{{ Auth::user()->profile_photo_url }}" alt="avatar" height="40" width="40"><span class="avatar-status-online"></span></span></a>

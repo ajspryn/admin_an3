@@ -125,7 +125,7 @@ $(function () {
                 }
             }
         });
-        $('div.head-label').html('<h6 class="mb-0">DataTable with Buttons</h6>');
+        $('div.head-label').html('<h6 class="mb-0"></h6>');
     }
 
     // Flat Date picker

@@ -15,4 +15,8 @@ class Penyedia_layanan extends Model
     public function ketersediaan(){
         return $this->hasMany(Ketersediaan::class);
     }
+
+    public function umpan_balik(){
+        return $this->hasMany(Umpan_balik::class);
+    }
 }

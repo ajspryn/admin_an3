@@ -22,5 +22,7 @@ class Pendaftaran extends Model
         return $this->belongsTo(Layanan::class);
     }
 
-
+    public function umpan_balik(){
+        return $this->hasMany(Umpan_balik::class);
+    }
 }

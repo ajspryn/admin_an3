@@ -20,4 +20,8 @@ class Layanan extends Model
         return $this->hasMany(pendaftaran::class);
     }
 
+    public function umpan_balik(){
+        return $this->hasMany(Umpan_balik::class);
+    }
+
 }
